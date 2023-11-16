@@ -61,7 +61,7 @@ char *pathfinder(char *command)
 		free(path);
 		token = strtok(NULL, delim);
 	}
-	fprintf(stderr, "./hsh: 1: %s: not found\n", command);
+	fprintf(stderr, "./hsh : No such file or directory");
 	free(fullpath);
 	return (NULL);
 }
