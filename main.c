@@ -38,13 +38,9 @@ int main(int argc, char *argv[])
 		}
 		args = parser_input(input);
 		if (args[0] != NULL)
-		{
 			executioner(args);
-		}
 		for (i = 0; args[i] != NULL; i++)
-		{
 			free(args[i]);
-		}
 		free(args);
 	}
 	free(input);
