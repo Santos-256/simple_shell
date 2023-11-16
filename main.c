@@ -1,0 +1,52 @@
+#include "sshell.h"
+
+/**
+ * main - This is the main entry point for the program
+ * @argc: Number of arguments passed
+ * @argv: An array of the arguments passed
+ * Return: 0 on success
+ */
+int main(int argc, char *argv[])
+{
+	char *input = NULL;
+	size_t input_size = 0;
+	ssize_t no_read;
+	char **args;
+	int i;
+
+	while (1)
+	{
+		if (argc > 1)
+		{
+			strcpy(input, argv[1]);
+			argc = 1;
+		}
+		else
+		{
+		pprompt();
+		no_read = grabline(&input, &input_size, stdin);
+		if (no_read == -1)
+		{
+			printf("\n");
+			break;
+		}
+		input[strcspn(input, "\n")] = '\0';
+		if (strcmp(input, "exit") == 0)
+		{
+			break;
+		}
+		}
+		args = parser_input(input);
+		if (args[0] != NULL)
+		{
+			executioner(args);
+		}
+		for (i = 0; args[i] != NULL; i++)
+		{
+			free(args[i]);
+		}
+		free(args);
+	}
+	free(input);
+	return (0);
+}
