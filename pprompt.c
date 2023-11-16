@@ -4,5 +4,7 @@
  */
 void pprompt(void)
 {
-	printf("#cisfun$ ");
+	char *str = "#cisfun$ ";
+
+	write(1, str, strlen(str));
 }

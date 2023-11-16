@@ -1,4 +1,13 @@
 #include "sshell.h"
+void cleanup(char *input, size_t *input_size)
+{
+	if (input == NULL)
+		return;
+	free(input);
+	*input_size = 0;
+	input = NULL;
+}
+
 
 /**
  * main - This is the main entry point for the program
@@ -16,29 +25,20 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
-		if (argc > 1)
-		{
-			strcpy(input, argv[1]);
-			argc = 1;
-		}
-		else
-		{
+		cleanup(input, &input_size);
 		pprompt();
-		no_read = grabline(&input, &input_size, stdin);
+		no_read = getline(&input, &input_size, stdin);
 		if (no_read == -1)
 		{
 			printf("\n");
 			break;
 		}
 		input[strcspn(input, "\n")] = '\0';
-		if (strcmp(input, "exit") == 0)
-		{
-			break;
-		}
-		}
 		args = parser_input(input);
 		if (args[0] != NULL)
 			executioner(args);
+		else
+			continue;
 		for (i = 0; args[i] != NULL; i++)
 			free(args[i]);
 		free(args);

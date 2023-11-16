@@ -1,4 +1,18 @@
 #include "sshell.h"
+int check_executable(char *path)
+{
+	if (path == NULL)
+	{
+		return (1);
+	}
+	if (access(path, F_OK | X_OK) == 0)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+
 /**
  * pathfinder - A function to find the path
  * @command: The function whose path is to be found
@@ -10,21 +24,23 @@ char *pathfinder(char *command)
 	char **env;
 	const char delim[] = ":";
 	char *token;
-
+	
+	if (check_executable(command) == 0)
+		return (command);	
 	for (env = environ; *env != 0; env++)
 	{
 		if (strstr(*env, "PATH=") != NULL)
 		{
-			fullpath = *env + 5;
+			fullpath = strdup(*env + 5);
 			break;
 		}
 	}
 	if (fullpath == NULL)
 	{
 		fprintf(stderr, "Error: PATH environment variable notfound.\n");
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
-	token = __strtok(fullpath, delim);
+	token = strtok(fullpath, delim);
 
 	while (token != NULL)
 	{
@@ -33,17 +49,19 @@ char *pathfinder(char *command)
 		if (!path)
 		{
 			perror("Memory allocation error");
-			exit(EXIT_FAILURE);
+			free(fullpath);
+			return (NULL);
 		}
 		sprintf(path, "%s/%s", token, command);
-
-		if (access(path, F_OK) == 0)
+		if (access(path, F_OK | X_OK) == 0)
 		{
+			free(fullpath);
 			return (path);
 		}
 		free(path);
-		token = __strtok(NULL, delim);
+		token = strtok(NULL, delim);
 	}
-	fprintf(stderr, "Error: Command not found in PATH.\n");
-	exit(EXIT_FAILURE);
+	fprintf(stderr, "./hsh: 1: %s: not found\n", command);
+	free(fullpath);
+	return (NULL);
 }

@@ -7,17 +7,20 @@
 char **parser_input(char *input)
 {
 	const char delim[] = " \t\n";
-	char **args = malloc(sizeof(char *));
+	char **args;
 	int argcount;
 	char *token;
 
+	if (input == NULL)
+		return (NULL);
+	args = malloc(sizeof(char *));
 	if (!args)
 	{
 		perror("Memorry allocation error");
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	argcount = 0;
-	token = __strtok(input, delim);
+	token = strtok(input, delim);
 	while (token != NULL)
 	{
 		args[argcount++] = strdup(token);
@@ -26,9 +29,9 @@ char **parser_input(char *input)
 		if (!args)
 		{
 			perror("Memmory allocation error");
-			exit(EXIT_FAILURE);
+			return (NULL);
 		}
-		token = __strtok(NULL, delim);
+		token = strtok(NULL, delim);
 	}
 	args[argcount] = NULL;
 	return (args);

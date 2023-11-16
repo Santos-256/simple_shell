@@ -6,6 +6,7 @@
 void executioner(char **args)
 {
 	pid_t child_pid;
+	char *fullpath;
 
 	if (args[0] == NULL)
 		return;
@@ -19,6 +20,9 @@ void executioner(char **args)
 		cd_execution(args);
 		return;
 	}
+	fullpath = pathfinder(args[0]);
+	if (fullpath == NULL)
+		return;
 	child_pid = fork();
 	if (child_pid == -1)
 	{
@@ -27,16 +31,14 @@ void executioner(char **args)
 	}
 	if (child_pid == 0)
 	{
-		char *fullpath = pathfinder(args[0]);
-
 		if (execve(fullpath, args, environ) == -1)
 		{
 			perror("Execve failed");
 			exit(EXIT_FAILURE);
 		}
-		else
-		{
-			wait(NULL);
-		}
+	}
+	else 
+	{
+		wait(NULL);
 	}
 }
