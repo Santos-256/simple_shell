@@ -37,7 +37,7 @@ int _eputchar(char ch)
 		a = 0;
 	}
 	if (ch != BUF_FLUSH)
-		buf[++] = ch;
+		buf[a++] = ch;
 	return (1);
 }
 
@@ -49,14 +49,14 @@ int _eputchar(char ch)
  * and errno is set nesesarilly.
  */
 
-int _putfd(char ch, int fil_des)
+int _putfil_des(char ch, int fil_des)
 {
 	static int a;
 	static char buf[WRITE_BUF_SIZE];
 
 	if (ch == BUF_FLUSH || a >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, a);
+		write(fil_des, buf, a);
 		a = 0;
 	}
 	if (ch != BUF_FLUSH)
@@ -71,7 +71,7 @@ int _putfd(char ch, int fil_des)
  * Return: character number
  */
 
-int _putsfd(char *s, int fil_des)
+int _putsfil_des(char *s, int fil_des)
 {
 	int a = 0;
 
@@ -79,7 +79,7 @@ int _putsfd(char *s, int fil_des)
 		return (0);
 	while (*s)
 	{
-		a += _putfd(*s++, fil_des);
+		a += _putsfil_des(s++, fil_des);
 	}
 	return (a);
 }

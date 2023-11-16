@@ -114,12 +114,10 @@ char *convert_number(long int n, int base, int flags)
 	p = &buffer[49];
 	*p = '\0';
 
-		do
-		{
+		do {
 			*--p = ptr[v % base];
 			v /= base;
-		}
-		while (v != 0);
+		} while (v != 0);
 		if (sign)
 			*--p = sign;
 		return (p);

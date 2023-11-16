@@ -91,7 +91,7 @@ size_t print_list_str(const list_t *ptr)
 
 	while (ptr)
 	{
-		_puts(ptr->str ? h->str : "(nil)");
+		_puts(ptr->str ? ptr->str : "(nil)");
 		_puts("\n");
 		ptr = ptr->next;
 		j++;

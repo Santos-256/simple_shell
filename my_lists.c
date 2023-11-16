@@ -33,9 +33,9 @@ char **list_to_strings(list_t *head)
 	char **str;
 	char *s;
 
-	if (!head || !i)
+	if (!head || !k)
 		return (NULL);
-	strs = malloc(sizeof(char *) * (k + 1));
+	str = malloc(sizeof(char *) * (k + 1));
 	if (!s)
 		return (NULL);
 	for (k = 0; node; node = node->next, k++)
@@ -44,7 +44,7 @@ char **list_to_strings(list_t *head)
 		if (!str)
 		{
 			for (m = 0; m < k; m++)
-				free(strs[m]);
+				free(str[m]);
 			free(str);
 			return (NULL);
 		}
@@ -88,14 +88,14 @@ size_t print_list(const list_t *ptr)
  * Return: match node, otherwise null
  */
 
-list_t *node_starts_with(list_t *node, char *prefix, char c)
+list_t *node_starts_with(list_t *node, char *fix, char ch)
 {
 	char *ptr = NULL;
 
 	while (node)
 	{
 		ptr = starts_with(node->str, fix);
-		if (ptr && ((c == -1) || (*ptr == ch)))
+		if (ptr && ((ch == -1) || (*ptr == ch)))
 			return (node);
 		node = node->next;
 	}
@@ -110,7 +110,7 @@ list_t *node_starts_with(list_t *node, char *prefix, char c)
  * Return: index of node otherwise -1
  */
 
-ssize_t get_node_index(list_t *head, list_t *node)
+ssize_t get_node_index(list_t *ptr, list_t *p)
 {
 	size_t k = 0;
 

@@ -40,9 +40,9 @@ void ffree(char **strstr)
  *
  * Return: pointer
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *_realloc(void *p, unsigned int old_size, unsigned int new_size)
 {
-	char *p;
+	char *ptr;
 
 	if (!p)
 		return (malloc(new_size));
@@ -50,7 +50,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (free(p), NULL);
 	if (new_size == old_size)
 		return (p);
-	p = malloc(new_size);
+	ptr = malloc(new_size);
 	if (!ptr)
 		return (NULL);
 	old_size = old_size < new_size ? old_size : new_size;

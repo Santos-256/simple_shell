@@ -68,10 +68,10 @@ int find_builtin(info_t *info)
 	};
 
 	for (j = 0; builtintbl[j].type; j++)
-		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
+		if (_strcmp(info->argv[0], builtintbl[j].type) == 0)
 		{
 			info->line_count++;
-			built_in_ret = builtintbl[i].func(info);
+			built_in_output = builtintbl[j].func(info);
 			break;
 		}
 		return (built_in_output);
@@ -86,10 +86,10 @@ int find_builtin(info_t *info)
 
 void find_cmd(info_t *info)
 {
-	char *dest = NULL;
+	char *path = NULL;
 	int q, r;
 
-	info->dest = info->argv[0];
+	info->path = info->argv[0];
 	if (info->linecount_flag == 1)
 	{
 		info->line_count++;
@@ -100,10 +100,10 @@ void find_cmd(info_t *info)
 			r++;
 	if (!r)
 		return;
-	dest = find_dest(info, _getenv(info, "PATH="), info->argv[0]);
-	if (dest)
+	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
+	if (path)
 	{
-		info->dest = dest;
+		info->path = path;
 		fork_cmd(info);
 	}
 	else
@@ -125,3 +125,33 @@ void find_cmd(info_t *info)
  *
  * Return: void
  */
+void fork_cmd(info_t *info)
+{
+	pid_t my_pid;
+
+	my_pid = fork();
+	if (my_pid == -1)
+	{
+		perror("Error:");
+		return;
+	}
+		if (my_pid == 0)
+		{
+			if (execve(info->path, info->argv, get_environ(info)) == -1)
+			{
+				free_info(info, 1);
+				if (errno == EACCES)
+					exit(126);
+			}
+		}
+		else
+		{
+			wait(&(info->status));
+			if (WIFEXITED(info->status))
+			{
+				info->status = WEXITSTATUS(info->status);
+				if (info->status == 126)
+					print_error(info, "Permission denied\n");
+			}
+		}
+}

@@ -43,22 +43,22 @@ int _isalpha(int ctr)
 
 /**
  * _atoi - converts a string to an integer
- * @s: the string to be converted
+ * @str: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise
  */
 
 int _atoi(char *str)
 {
-	t k, sing = 1, flag = 0, ret;
+	int k, sing = 1, flag = 0, ret;
 	unsigned int result = 0;
 
 	for (k = 0;  str[k] != '\0' && flag != 2; k++)
 	{
 		if (str[k] == '-')
-			sign *= -1;
+			sing *= -1;
 
 
-		if (s[k] >= '0' && str[k] <= '9')
+		if (str[k] >= '0' && str[k] <= '9')
 		{
 			flag = 1;
 			result *= 10;

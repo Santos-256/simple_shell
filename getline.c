@@ -8,7 +8,7 @@
  *
  * Return: bytes
  */
-ssize_t input_buf(info_t *info, char **buf, size_t *len)
+ssize_t input_buf(info_t *info, char **buf, size_t *longi)
 {
 	ssize_t v = 0;
 	size_t longi_p = 0;
@@ -39,7 +39,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *len)
 			}
 		}
 	}
-		return (r);
+		return (v);
 }
 
 /**
@@ -123,7 +123,7 @@ int _getline(info_t *info, char **p, size_t *length)
 
 	ptr = *p;
 	if (ptr && length)
-		str = *length;
+		ptr = *length;
 	if (j == longi)
 		j = longi = 0;
 	v = read_buf(info, buf, &longi);
@@ -131,22 +131,22 @@ int _getline(info_t *info, char **p, size_t *length)
 		return (-1);
 	ch = _strchr(buf + j, '\n');
 	k = ch ? 1 + (unsigned int)(ch - buf) : longi;
-	new_p = _realloc(ptr, str, str ? str + k : k + 1);
+	new_p = _realloc(ptr, ptr, ptr ? ptr + k : k + 1);
 	if (!new_p)
 		return (ptr ? free(ptr), -1 : -1);
-	if (str)
+	if (ptr)
 		_strncat(new_p, buf + j, k - j);
 	else
 		_strncpy(new_p, buf + j, k - j + 1);
-	str += k - j;
+	ptr += k - j;
 	j = k;
 	ptr = new_p;
 
 
 	if (length)
-		*length = str;
+		*length = ptr;
 	*p = ptr;
-	return (str);
+	return (ptr);
 }
 
 /**

@@ -36,7 +36,10 @@ void set_info(info_t *info, char **av)
 				info->argv[1] = NULL;
 			}
 		}
-		for (k = 0; info->argv && info->argv[k]; k++);
+
+		for
+			(k = 0; info->argv &&
+			 info->argv[k]; k++);
 		info->argc = k;
 		replace_alias(info);
 		replace_vars(info);
@@ -54,13 +57,13 @@ void free_info(info_t *info, int fr)
 	info->argv = NULL;
 	info->path = NULL;
 
-	if (all)
+	if (fr)
 	{
 		if (!info->cmd_buf)
 			free(info->arg);
 		if (info->env)
 			free_list(&(info->env));
-		f (info->history)
+		if (info->history)
 			free_list(&(info->history));
 		if (info->alias)
 			free_list(&(info->alias));

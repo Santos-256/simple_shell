@@ -30,7 +30,7 @@ char *_getenv(info_t *info, const char *name)
 
 	while (node)
 	{
-		p = starts_with(node->str, name);
+		ptr = starts_with(node->str, name);
 		if (ptr && *ptr)
 			return (ptr);
 		node = node->next;
@@ -91,12 +91,12 @@ int _myunsetenv(info_t *info)
  */
 int populate_env_list(info_t *info)
 {
-	list_t *nod = NULL;
+	list_t *node = NULL;
 	size_t t;
 
 	for (t = 0; environ[t]; t++)
 		add_node_end(&node, environ[t], 0);
-	info->env = nod;
+	info->env = node;
 	return (0);
 }
 

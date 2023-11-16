@@ -14,11 +14,11 @@ char *get_history_file(info_t *info)
 	ch = _getenv(info, "HOME=");
 	if (!ch)
 		return (NULL);
-	ptr = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
+	ptr = malloc(sizeof(char) * (_strlen(ch) + _strlen(HIST_FILE) + 2));
 
 	if (!ptr)
 		return (NULL);
-	buf[0] = 0;
+	ptr[0] = 0;
 	_strcpy(ptr, ch);
 	_strcat(ptr, "/");
 	_strcat(ptr, HIST_FILE);
@@ -49,11 +49,11 @@ int write_history(info_t *info)
 		return (-1);
 	for (node = info->history; node; node = node->next)
 	{
-		_putsfd(node->str, fil_des);
-		_putfd('\n', fil_des);
+		_putsfil_des(node->str, fil_des);
+		_putsfil_des('\n', fil_des);
 	}
 
-	_putfd(BUF_FLUSH, fil_des);
+	_puts(fil_des);
 	close(fil_des);
 	return (1);
 }
@@ -87,7 +87,7 @@ int read_history(info_t *info)
 	buf = malloc(sizeof(char) * (fsize + 1));
 	if (!buf)
 		return (0);
-	rdlen = read(fd, buf, fsize);
+	longi = read(fil_des, buf, fsize);
 	buf[fsize] = 0;
 	if (longi <= 0)
 		return (free(buf), 0);
@@ -98,9 +98,9 @@ int read_history(info_t *info)
 		{
 			buf[j] = 0;
 			build_history_list(info, buf + cncld, linecount++);
-			last = j + 1;
+			linecount = j + 1;
 		}
-	if (last != j)
+	if (linecount != j)
 		build_history_list(info, buf + cncld, linecount++);
 	free(buf);
 	info->histcount = linecount;
