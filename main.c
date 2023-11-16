@@ -15,7 +15,7 @@ void cleanup(char *input, size_t *input_size)
  * @argv: An array of the arguments passed
  * Return: 0 on success
  */
-int main(int argc, char *argv[])
+int main(void)
 {
 	char *input = NULL;
 	size_t input_size = 0;
