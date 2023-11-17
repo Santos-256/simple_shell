@@ -37,7 +37,7 @@ void executioner(char **args)
 			exit(EXIT_FAILURE);
 		}
 	}
-	else 
+	else
 	{
 		wait(NULL);
 	}

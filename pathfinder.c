@@ -11,8 +11,6 @@ int check_executable(char *path)
 	}
 	return (1);
 }
-
-
 /**
  * pathfinder - A function to find the path
  * @command: The function whose path is to be found
@@ -26,7 +24,7 @@ char *pathfinder(char *command)
 	char *token;
 	
 	if (check_executable(command) == 0)
-		return (command);	
+		return (command);
 	for (env = environ; *env != 0; env++)
 	{
 		if (strstr(*env, "PATH=") != NULL)
@@ -41,11 +39,10 @@ char *pathfinder(char *command)
 		return (NULL);
 	}
 	token = strtok(fullpath, delim);
-
 	while (token != NULL)
 	{
 		char *path = malloc(strlen(token) + strlen(command) + 2);
-
+		
 		if (!path)
 		{
 			perror("Memory allocation error");

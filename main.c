@@ -1,4 +1,7 @@
 #include "sshell.h"
+/**
+ * cleanup - A function to free up allocated memory
+ */
 void cleanup(char *input, size_t *input_size)
 {
 	if (input == NULL)
@@ -11,8 +14,6 @@ void cleanup(char *input, size_t *input_size)
 
 /**
  * main - This is the main entry point for the program
- * @argc: Number of arguments passed
- * @argv: An array of the arguments passed
  * Return: 0 on success
  */
 int main(void)
