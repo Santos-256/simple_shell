@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <string.h>
 
 /**
  * input_buf - buffers chained commands
@@ -118,12 +119,12 @@ int _getline(info_t *info, char **p, size_t *length)
 	static char buf[READ_BUF_SIZE];
 	static size_t j, longi;
 	size_t k;
-	ssize_t v = 0, s = 0;
+	ssize_t v = 0, str = 0;
 	char *ptr = NULL, *new_p = NULL, *ch;
 
 	ptr = *p;
 	if (ptr && length)
-		ptr = *length;
+		str = *length;
 	if (j == longi)
 		j = longi = 0;
 	v = read_buf(info, buf, &longi);
@@ -131,22 +132,22 @@ int _getline(info_t *info, char **p, size_t *length)
 		return (-1);
 	ch = _strchr(buf + j, '\n');
 	k = ch ? 1 + (unsigned int)(ch - buf) : longi;
-	new_p = _realloc(ptr, ptr, ptr ? ptr + k : k + 1);
+	new_p = _realloc(ptr, sizeof(char) * (ptr ? (strlen(ptr) + k) : (k + 1)), sizeof(char) * (ptr ? (strlen(ptr) + k) : (k + 1)));
 	if (!new_p)
 		return (ptr ? free(ptr), -1 : -1);
-	if (ptr)
+	if (str)
 		_strncat(new_p, buf + j, k - j);
 	else
 		_strncpy(new_p, buf + j, k - j + 1);
-	ptr += k - j;
+	str += k - j;
 	j = k;
 	ptr = new_p;
 
 
 	if (length)
-		*length = ptr;
+		*length = str;
 	*p = ptr;
-	return (ptr);
+	return (str);
 }
 
 /**

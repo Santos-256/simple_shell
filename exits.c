@@ -9,8 +9,11 @@
  */
 char *_strncpy(char *dest, char *src, int num)
 {
-	int m = 0, n;
+	int m, n;
 	char *ptr = dest;
+
+	m = 0;
+
 
 	while (src[m] != '\0' && m < num - 1)
 	{
@@ -22,7 +25,7 @@ char *_strncpy(char *dest, char *src, int num)
 	{
 		n = m;
 
-		while (n, num)
+		while (n < num)
 		{
 			dest[n] = '\0';
 			n++;
@@ -41,7 +44,7 @@ char *_strncpy(char *dest, char *src, int num)
 char *_strncat(char *dest, char *src, int num)
 {
 	int m, n;
-	char *ptr;
+	char *ptr = dest;
 
 	m = 0;
 	n = 0;

@@ -50,10 +50,10 @@ int write_history(info_t *info)
 	for (node = info->history; node; node = node->next)
 	{
 		_putsfil_des(node->str, fil_des);
-		_putsfil_des('\n', fil_des);
+		_putsfil_des("\n", fil_des);
 	}
 
-	_puts(fil_des);
+	_putsfil_des(BUF_FLUSH, fil_des);
 	close(fil_des);
 	return (1);
 }

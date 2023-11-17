@@ -49,17 +49,17 @@ int _eputchar(char ch)
  * and errno is set nesesarilly.
  */
 
-int _putfil_des(char ch, int fil_des)
+int _putfil_des(char *ch, int fil_des)
 {
 	static int a;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (ch == BUF_FLUSH || a >= WRITE_BUF_SIZE)
+	if (ch == '\0' || a >= WRITE_BUF_SIZE)
 	{
 		write(fil_des, buf, a);
 		a = 0;
 	}
-	if (ch != BUF_FLUSH)
+	if (ch != '\0')
 		buf[a++] = ch;
 	return (1);
 }

@@ -68,12 +68,14 @@ int find_builtin(info_t *info)
 	};
 
 	for (j = 0; builtintbl[j].type; j++)
+	{
 		if (_strcmp(info->argv[0], builtintbl[j].type) == 0)
 		{
 			info->line_count++;
 			built_in_output = builtintbl[j].func(info);
 			break;
 		}
+	}
 		return (built_in_output);
 }
 

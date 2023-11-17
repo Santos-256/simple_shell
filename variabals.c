@@ -12,7 +12,7 @@ int is_chain(info_t *info, char *buf, size_t *ptr)
 {
 	size_t k = *ptr;
 
-	if (buf[j] == '|' && buf[k + 1] == '|')
+	if (buf[k] == '|' && buf[k + 1] == '|')
 	{
 		buf[k] = 0;
 		k++;
@@ -91,7 +91,7 @@ int replace_alias(info_t *info)
 		if (!ch)
 			return (0);
 		ch = _strdup(ch + 1);
-		if (!p)
+		if (!ch)
 			return (0);
 		info->argv[0] = ch;
 	}
@@ -121,8 +121,8 @@ int replace_vars(info_t *info)
 		}
 		if (!_strcmp(info->argv[j], "$$"))
 		{
-			replace_string(&(info->argv[j])
-					_strdup(convert_number(getpid(), 10, 0)));
+			replace_string(&(info->argv[j]))
+					_strdup(convert_number(getpid(), 10, 0))
 			continue;
 		}
 		node = node_starts_with(info->env, &info->argv[j][1], '=');
