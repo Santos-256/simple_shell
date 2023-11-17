@@ -1,45 +1,25 @@
-#include "sshell.h"
+#include "sshell.c"
+
 /**
- * grabline - This is an implementation of getline function
- * @lineptr: A pointer to the string of characters
- * @b: size of characters passed
- * @stream: Source of the character or string to be read
- * Return: Number of characters read
+ * grabline - A function that acts like the getline function
+ * @lineptr: A pointer that points to a pointer pointing to the first charaacter of the line
+ * @n: A pointer pointing to the size of the lineptr
+ * @stream: The stream from which the line is going to be read
+ * Return: The number of bytes read from the line
  */
 
-ssize_t grabline(char **lineptr, size_t *b, FILE *stream)
+ssize_t grabline(char **lineptr, size_t *n, FILE *stream)
 {
-	size_t characters_read = 0;
-	int f;
-
-	if (*lineptr == NULL || *b == 0)
+	// Checking if the buffer is empty
+	if (lineptr == NULL || n == 0)
 	{
-		*b = 128;
-		*lineptr = (char *)malloc(*b);
-		if (*lineptr == NULL)
+		n = 100;
+		lineptr = (char *) malloc(sizeof(char) * n);
+		if (lineptr == NULL)
 		{
-			perror("malloc");
+			perror("Malloc error");
 			return (-1);
 		}
 	}
-	while ((f = fgetc(stream)) != EOF && f != '\n')
-	{
-		if (characters_read == *b - 1)
-		{
-			*b *= 2;
-			*lineptr = (char *) realloc(*lineptr, *b);
-			if (*lineptr == NULL)
-			{
-				perror("realloc");
-				return (-1);
-			}
-		}
-		(*lineptr)[characters_read++] = (char)f;
-	}
-	if (characters_read == 0 && f == EOF)
-	{
-		return (-1);
-	}
-	(*lineptr)[characters_read] = '\0';
-	return (characters_read);
-}
+
+
