@@ -36,7 +36,7 @@ char **list_to_strings(list_t *head)
 	if (!head || !k)
 		return (NULL);
 	str = malloc(sizeof(char *) * (k + 1));
-	if (!s)
+	if (!str)
 		return (NULL);
 	for (k = 0; node; node = node->next, k++)
 	{
@@ -76,7 +76,7 @@ size_t print_list(const list_t *ptr)
 		ptr = ptr->next;
 		k++;
 	}
-	return (ptr);
+	return (k);
 }
 
 /**

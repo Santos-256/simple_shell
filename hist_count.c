@@ -35,7 +35,7 @@ char *get_history_file(info_t *info)
 
 int write_history(info_t *info)
 {
-	ssize_t fil_des;
+	ssize_t fd;
 	char *filename = get_history_file(info);
 	list_t *node = NULL;
 
@@ -43,18 +43,18 @@ int write_history(info_t *info)
 		return (-1);
 
 
-	fil_des = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	free(filename);
-	if (fil_des == -1)
+	if (fd == -1)
 		return (-1);
 	for (node = info->history; node; node = node->next)
 	{
-		_putsfil_des(node->str, fil_des);
-		_putsfil_des("\n", fil_des);
+		_putsfd(node->str, fd);
+		_putfd('\n', fd);
 	}
 
-	_putsfil_des(BUF_FLUSH, fil_des);
-	close(fil_des);
+	_putsfd(BUF_FLUSH, fd);
+	close(fd);
 	return (1);
 }
 
@@ -148,5 +148,6 @@ int renumber_history(info_t *info)
 		node->num = j++;
 		node = node->next;
 	}
-	return (info->histcount = j);
+	info->histcount = j;
+	return (j);
 }

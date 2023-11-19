@@ -137,8 +137,8 @@ int delete_node_at_index(list_t **head, unsigned int index)
 		prev_node = node;
 		node = node->next;
 	}
+	return (0);
 }
-
 /**
  * free_list - frees all nodes of a list in buffer
  * @head_p: address of pointer to head node

@@ -19,7 +19,8 @@
 #define CMD_NORM	0
 #define CMD_OR		1
 #define CMD_AND		2
-#define CMD_CHAIN
+#define CMD_CHAIN       3
+#define CMD_SEP
 
 #define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
@@ -47,6 +48,8 @@ typedef struct liststr
 	char *num;
 	struct liststr *next;
 } list_t;
+
+
 
 /**
  *struct passinfo - contains pseudo-arguements to pass into a function,
@@ -120,10 +123,12 @@ int is_cmd(info_t *, char *);
 char *dup_chars(char *, int, int);
 char *find_path(info_t *, char *, char *);
 int loophsh(char **);
+
 void _eputs(char *);
 int _eputchar(char);
-int _putfil_des(char *, int);
-int _putsfil_des(char *, int);
+int _putfil_des(char *ch, int fil_des);
+int _putsfil_des(char *s, int fil_des);
+
 int _strlen(char *);
 int _strcmp(char *, char *);
 char *starts_with(const char *, const char *);
