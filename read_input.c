@@ -1,21 +1,27 @@
 #include "sshell.h"
-
+#define buff_size 100
 /**
- * read_input - This is a function to read the input from the user
- * @info: Takes in the struct and reads the information
- * Return: Number of lines read 
+ * read_input - A function to read the input from the user
+ * @info: A struct for defined variables
+ * Return: Number of bytes read
  */
-ssize_t read_input()
+ssize_t read_input(info_def *info)
 {
 	char *lineptr = NULL;
-	size_t size =0;
+	size_t size = 0;
 	ssize_t no_read;
 
+	info->in_str = NULL;
 	no_read = getline(&lineptr, &size, stdin);
-	if(no_read == -1)
+	if (no_read == -1)
 	{
+		if (feof(stdin))
+		{
+			free(lineptr);
+			return (-1);
+		}
 		perror("getline");
-		return (-1);
 	}
+	info->in_str = lineptr;
 	return (no_read);
 }

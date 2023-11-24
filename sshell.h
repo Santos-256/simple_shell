@@ -3,24 +3,28 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <fcntl.h>
 
-//A struct with all the user defined variables
-
-typedef struct info
+/** A struct for variables**/
+/**
+ * struct all_thee - A struct containing all the necessary arguments
+ */
+typedef struct all_thee
 {
-	//read_input
-	char **lineptr;
-	size_t size;
-	FILE *stream;
-
+	int argc;
+	char **argsv;
+	char *in_str;
 } info_def;
 
-ssize_t read_input();
-ssize_t grabline(char **lineptr, size_t *n, FILE *stream);
 void pprompt(void);
-
-
+ssize_t read_input(info_def *info);
+char **parser_input(info_def *info);
+void args_free(info_def *info);
+int executioner(info_def *info);
+void intialiser(info_def *info);
 
 #endif

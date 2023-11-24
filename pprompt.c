@@ -1,10 +1,10 @@
 #include "sshell.h"
-
 /**
- * pprompt - A function that runs prints the prompt
+ * pprompt - This is a function to display the shell
  */
 void pprompt(void)
 {
-	char *prompt = "#cisfun$ ";
-	write(1, prompt, strlen(prompt));
+	char *p = "#cisfun$ ";
+
+	write(1, p, strlen(p));
 }
